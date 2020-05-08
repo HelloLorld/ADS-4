@@ -45,7 +45,7 @@ void TQueue<T>::push(const T& item)
     // проверяем, ести ли свободное место в очереди
     assert(count < size);
     int i = size;
-    while (i > 0)
+    while (i >= 0)
     {
         if (arr[i].prior > arr[i - 1].prior)
         {
