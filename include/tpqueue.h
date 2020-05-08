@@ -2,8 +2,16 @@
 #include <iostream>
 #include <stdio.h>
 
+#include <cassert>
+
+struct SYM
+{
+	char ch;
+	int prior;
+};
+
 template<typename T>
-class TQueue
+class TPQueue
 {
 private:
     T* arr;          // массив с данными
@@ -12,8 +20,8 @@ private:
         end;         // конец очереди
     int count;       // счетчик элементов
 public:
-    TQueue(int = 100);          // конструктор по умолчанию
-    ~TQueue();                 // деструктор
+    TPQueue(int = 100);          // конструктор по умолчанию
+    ~TPQueue();                 // деструктор
 
     void push(const T&); // добавить элемент в очередь
     T pop();              // удалить элемент из очереди
@@ -24,7 +32,7 @@ public:
 
 // конструктор по умолчанию
 template<typename T>
-TQueue<T>::TQueue(int sizeQueue) :
+TPQueue<T>::TPQueue(int sizeQueue) :
     size(sizeQueue),
     begin(0), end(0), count(0)
 {
@@ -34,7 +42,7 @@ TQueue<T>::TQueue(int sizeQueue) :
 
 // деструктор класса Queue
 template<typename T>
-TQueue<T>::~TQueue()
+TPQueue<T>::~TPQueue()
 {
     delete[] arr;
 }
@@ -42,12 +50,12 @@ TQueue<T>::~TQueue()
 
 // функция добавления элемента в очередь
 template<typename T>
-void TQueue<T>::push(const T& item)
+void TPQueue<T>::push(const T& item)
 {
     // проверяем, ести ли свободное место в очереди
     assert(count < size);
     arr[end] = item;
-     for(int i=size;i>=0;i--)
+    for(int i=size;i>=0;i--)
     {
         if (arr[i].prior > arr[i - 1].prior)
         {
@@ -55,6 +63,7 @@ void TQueue<T>::push(const T& item)
             arr[i - 1] = arr[i];
             arr[i] = tmp;
         }
+        i--;
     }
     count++;
     end++;
@@ -65,9 +74,9 @@ void TQueue<T>::push(const T& item)
 
 // функция удаления элемента из очереди
 template<typename T>
-T TQueue<T>::pop()
+T TPQueue<T>::pop()
 {
-	T item;
+    T item;
     // проверяем, есть ли в очереди элементы
     if(count>0)
 
@@ -83,7 +92,7 @@ T TQueue<T>::pop()
 
 // функция чтения элемента на первой позиции
 template<typename T>
-T TQueue<T>::get() const
+T TPQueue<T>::get() const
 {
     // проверяем, есть ли в очереди элементы
     if (count > 0);
@@ -92,21 +101,14 @@ T TQueue<T>::get() const
 
 // функция проверки очереди на пустоту
 template<typename T>
-bool TQueue<T>::isEmpty() const
+bool TPQueue<T>::isEmpty() const
 {
     return count == 0;
 }
 
 // функция проверки очереди на заполненность
 template<typename T>
-bool TQueue<T>::isFull() const
+bool TPQueue<T>::isFull() const
 {
     return count == size;
 }
-
-
-struct SYM
-{
-	char ch;
-	int  prior;
-};
