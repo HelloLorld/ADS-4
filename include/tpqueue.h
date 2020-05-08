@@ -65,6 +65,7 @@ void TQueue<T>::push(const T& item)
 template<typename T>
 T TQueue<T>::pop()
 {
+	T item;
     // проверяем, есть ли в очереди элементы
     if(count>0)
 
