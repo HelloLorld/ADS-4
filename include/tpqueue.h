@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include <cassert>
+using namespace std;
 
 struct SYM
 {
